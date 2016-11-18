@@ -3,10 +3,10 @@
 * docker-compose bliver ikke brugt
 * der var fejl i header på min csv fil og hvis det bugger uden at give error message så det nok der der går noget galt men deet bør virke nu
 
-* kør docker build -t "<navn>" .       /.... husk hvergang der ændres i csv filerne skal docker buildes igen
+* kør docker build -t "navn" .      /husk prikken tilslut /.... husk hvergang der ændres i csv filerne skal docker buildes igen
 * kør docker run -e NEO4J_AUTH=none \
     --publish=7474:7474 --publish=7687:7687 \
-     "<navn>"
+     "navn"
 * kør python import.py   / kræver pip install py2neo
 * bodies.py kan så hente eg bodies ud.
 

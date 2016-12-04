@@ -1,15 +1,15 @@
 from py2neo import Graph
 import datetime
 import calendar
-from time import time
-startTime = time()
+import time
+startTime = time.time()
 
 def getUTCStamp(dt):
 	return calendar.timegm(dt.utctimetuple())
 
 def toMin(timeDiff):
-	minutes = timeDiff / (1000 * 60)
-	return "%.3f" % minutes
+	seconds = timeDiff
+	return str("%.3f" % seconds)
 
 graph = Graph()
 
@@ -28,10 +28,11 @@ query = '\
 	WHERE c.body =~ ".*[Oo]bama.*" \
 	RETURN count(c) as obamas\
 	'
-tick = time()
+tick = time.time()
 retval = graph.run(query)
-print(toMin(time() - tick))
-print("Time to find Obama mentions: " + retval.data()[0]["obamas"])
+data = retval.data()[0]
+print("Obama mentions: " + str(data["obamas"]))
+print("Time to find Obama mentions: " + toMin(time.time() - tick))
 
 ###
 ### Check total number of Romney mentions in 2008
@@ -42,10 +43,12 @@ query = '\
 	WHERE c.body =~ ".*[Rr]omney.*" \
 	RETURN count(c) as romneys\
 	'
-tick = time()
+
+tick = time.time()
 retval = graph.run(query)
-print(retval.data()[0]["romneys"])
-print("Time to find Romney mentions: " + toMin(time() - tick))
+data = retval.data()[0]
+print("Romney mentions: " + str(data["romneys"]))
+print("Time to find Romney mentions: " + toMin(time.time() - tick))
 
 
 '''
@@ -83,4 +86,4 @@ for i in range(1,11):
 #print(retval.data())
 
 
-print("TOTAL TIME SPENT:" + str(toMin(time() - startTime)))
+print("TOTAL TIME SPENT:" + toMin(time.time() - startTime))

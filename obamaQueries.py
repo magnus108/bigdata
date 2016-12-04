@@ -18,8 +18,7 @@ months = []
 for i in range(1,13):
 	months.append(getUTCStamp(datetime.datetime(2008,i,1)))
 
-
-
+'''
 ###
 ### Check Total number of Obama menntions in 2008
 ###
@@ -49,14 +48,13 @@ retval = graph.run(query)
 data = retval.data()[0]
 print("Romney mentions: " + str(data["romneys"]))
 print("Time to find Romney mentions: " + toMin(time.time() - tick))
-
-
 '''
+
+
 #
 obamasPrMonth = []
 
-for i in range(1,11):
-	print(months[i])
+for i in range(0,11):
 	query = '\
 	MATCH (c:Comment)\
 	WHERE c.body =~ ".*[Oo]bama.*"\
@@ -68,19 +66,9 @@ for i in range(1,11):
 	data = retval.data()
 	print(data[0]["obamas"])
 	obamasPrMonth.append(data[0]["obamas"])
-'''
 
 
-#print(" ")
-#print(months[1])
-#print(months[1 + 1])
-#query = '\
-#	MATCH (c:Comment) \
-#	WHERE c.body =~ ".*[Oo]bama.*" \
-#	AND c.created_utc > "' + str(months[1]) + '" \
-#	AND c.created_utc < "' + str(months[1 + 1]) + '" \
-#	RETURN count(c) as obamas\
-#	'
+
 
 #retval = graph.run(query)	
 #print(retval.data())

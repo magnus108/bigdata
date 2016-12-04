@@ -1,8 +1,8 @@
 from py2neo import Graph
 import datetime
 import calendar
-import time
-startTime = time.time()
+from time import time
+startTime = time()
 
 def getUTCStamp(dt):
 	return calendar.timegm(dt.utctimetuple())
@@ -21,15 +21,38 @@ for i in range(1,13):
 
 
 ###
-### Check
+### Check Total number of Obama menntions in 2008
 ###
+query = '\
+	MATCH (c:Comment) \
+	WHERE c.body =~ ".*[Oo]bama.*" \
+	RETURN count(c) as obamas\
+	'
+tick = time()
+retval = graph.run(query)
+print(toMin(time() - tick))
+print("Time to find Obama mentions: " + retval.data()[0]["obamas"])
+
+###
+### Check total number of Romney mentions in 2008
+###
+
+query = '\
+	MATCH (c:Comment) \
+	WHERE c.body =~ ".*[Rr]omney.*" \
+	RETURN count(c) as romneys\
+	'
+tick = time()
+retval = graph.run(query)
+print(retval.data()[0]["romneys"])
+print("Time to find Romney mentions: " + toMin(time() - tick))
 
 
 '''
 #
 obamasPrMonth = []
 
-for i in range(10,11):
+for i in range(1,11):
 	print(months[i])
 	query = '\
 	MATCH (c:Comment)\
@@ -60,4 +83,4 @@ for i in range(10,11):
 #print(retval.data())
 
 
-print("TOTAL TIME SPENT:" + str(toMin(time.time() - startTime)))
+print("TOTAL TIME SPENT:" + str(toMin(time() - startTime)))
